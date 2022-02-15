@@ -1,19 +1,29 @@
 {
   "name": "char-dust",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "convert image to ascii",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "module": "dist/index.mjs",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "keywords": [
+    "char",
+    "ascii"
+  ],
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "yarn clean && tsc",
-    "build:demo": "cd demo && yarn && yarn build",
-    "clean": "rm -rf dist",
-    "dev": "cd demo && yarn dev",
-    "lint": "eslint . --ext .ts",
-    "prepublishOnly": "yarn build"
+    "build": "tsup",
+    "build:demo": "cd demo && npm run build",
+    "dev": "cd demo && npm run dev",
+    "lint": "eslint \"**/*.{vue,ts,js}\"",
+    "prepublishOnly": "npm run build"
   },
   "author": {
     "name": "YunYouJun",
@@ -29,21 +39,20 @@
     "@ctrl/tinycolor": "^3.4.0"
   },
   "devDependencies": {
-    "@types/node": "^16.10.2",
-    "@typescript-eslint/eslint-plugin": "^4.32.0",
-    "@typescript-eslint/parser": "^4.32.0",
-    "eslint": "^7.32.0",
-    "lint-staged": "^11.1.2",
-    "typescript": "^4.4.3",
+    "@antfu/eslint-config": "^0.16.1",
+    "@types/node": "^17.0.18",
+    "eslint": "^8.9.0",
+    "lint-staged": "^12.3.4",
+    "tsup": "^5.11.13",
+    "typescript": "^4.5.5",
     "yorkie": "^2.0.0"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
   "lint-staged": {
-    "*.{ts}": [
-      "yarn lint",
-      "git add"
+    "*.{vue,ts}": [
+      "eslint --fix"
     ]
   }
 }
